@@ -1,0 +1,22 @@
+{
+  "name": "screen-recorder",
+  "main": "./lib/screen-recorder",
+  "version": "0.0.0",
+  "description": "Record your atom editor to a gif",
+  "keywords": [
+    "screen",
+    "recording",
+    "recorder"
+  ],
+  "activationCommands": {
+    "atom-workspace": "screen-recorder:open-select-area"
+  },
+  "repository": "https://github.com/lexcast/screen-recorder",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "atom-space-pen-views": "^2.0.3"
+  }
+}

@@ -1,0 +1,5 @@
+'atom-workspace':
+  'alt-shift-a': 'screen-recorder:open-select-area'
+
+'.screen-recorder-select-area':
+  'escape': 'screen-recorder:close-select-area'

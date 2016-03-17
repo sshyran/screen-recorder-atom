@@ -1,0 +1,21 @@
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'screen-recorder'
+      'submenu': [
+        {
+          'label': 'Open select area'
+          'command': 'screen-recorder:open-select-area'
+        }
+      ]
+    ]
+  }
+]
+'context-menu':
+  '.screen-recorder-select-area': [
+    {
+      'label': 'Close select area'
+      'command': 'screen-recorder:close-select-area'
+    }
+  ]
