@@ -3,10 +3,16 @@
 
 module.exports =
 class ScreenRecorderSelectAreaView extends View
+  recorderManager = null
+
   @content: ->
     @div class: 'screen-recorder-select-area', tabindex: -1, =>
       @div outlet: 'ghostSelect', class: 'ghost-select', =>
         @span()
+
+  constructor: (recorderManager) ->
+    @recorderManager = recorderManager
+    super
 
   initialize: ->
     @subscriptions = new CompositeDisposable
@@ -34,39 +40,53 @@ class ScreenRecorderSelectAreaView extends View
       @initialW = e.pageX
       @initialH = e.pageY
 
-      document.addEventListener 'mousemove', (e) =>
-        w = Math.abs(@initialW - e.pageX)
-        h = Math.abs(@initialH - e.pageY)
+      document.addEventListener 'mousemove', @updateGhostSelect
+      document.addEventListener 'mouseup', @handleGhostSelect
 
-        @ghostSelect.css({
-          'width': w,
-          'height': h
-        })
+  updateGhostSelect: (e) =>
+    w = Math.abs(@initialW - e.pageX)
+    h = Math.abs(@initialH - e.pageY)
 
-        if e.pageX <= @initialW && e.pageY >= @initialH
-          @ghostSelect.css({
-            'left': e.pageX
-          })
-        else if e.pageY <= @initialH && e.pageX >= @initialW
-          @ghostSelect.css({
-            'top': e.pageY
-          })
-        else if e.pageY < @initialH && e.pageX < @initialW
-          @ghostSelect.css({
-            'left': e.pageX,
-            'top': e.pageY
-          })
+    @ghostSelect.css({
+      'width': w,
+      'height': h
+    })
 
-      document.addEventListener 'mouseup', (e) =>
-        document.removeEventListener 'mousemove'
-        document.removeEventListener 'mouseup'
-        @ghostSelect.removeClass 'ghost-active'
-        @ghostSelect.css({
-          'width': 0,
-          'height': 0
-        })
+    if e.pageX <= @initialW && e.pageY >= @initialH
+      @ghostSelect.css({
+        'left': e.pageX
+      })
+    else if e.pageY <= @initialH && e.pageX >= @initialW
+      @ghostSelect.css({
+        'top': e.pageY
+      })
+    else if e.pageY < @initialH && e.pageX < @initialW
+      @ghostSelect.css({
+        'left': e.pageX,
+        'top': e.pageY
+      })
+
+  handleGhostSelect: (e) =>
+    document.removeEventListener 'mousemove', @updateGhostSelect
+    document.removeEventListener 'mouseup', @handleGhostSelect
+    @ghostSelect.removeClass 'ghost-active'
+    @ghostSelect.css({
+      'width': 0,
+      'height': 0
+    })
+    @hide()
+
+    w = Math.abs(@initialW - e.pageX)
+    h = Math.abs(@initialH - e.pageY)
+    x = if e.pageX <= @initialW then e.pageX else @initialW
+    y = if e.pageY <= @initialH then e.pageY else @initialH
+
+    @startRecording x, y, w, h
 
   hide: ->
     for panel in atom.workspace.getModalPanels()
       panel.hide() if panel.className is 'screen-recorder-select-area-panel'
     atom.workspace.getActivePane().activate()
+
+  startRecording: (x, y, w, h) ->
+    @recorderManager.startRecording x, y, w, h

@@ -8,6 +8,18 @@
           'label': 'Open select area'
           'command': 'screen-recorder:open-select-area'
         }
+        {
+          'label': 'Record window'
+          'command': 'screen-recorder:record-window'
+        }
+        {
+          'label': 'Record tree view'
+          'command': 'screen-recorder:record-tree-view'
+        }
+        {
+          'label': 'Record active pane'
+          'command': 'screen-recorder:record-active-pane'
+        }
       ]
     ]
   }

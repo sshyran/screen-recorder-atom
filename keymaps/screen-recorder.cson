@@ -1,5 +1,10 @@
 'atom-workspace':
   'alt-shift-a': 'screen-recorder:open-select-area'
+  'alt-shift-w': 'screen-recorder:record-window'
+  'alt-shift-q': 'screen-recorder:record-tree-view'
+  'alt-shift-d': 'screen-recorder:record-active-pane'
+  'alt-shift-z': 'screen-recorder:stop-recording'
+  'alt-shift-x': 'screen-recorder:cancel-recording'
 
 '.screen-recorder-select-area':
   'escape': 'screen-recorder:close-select-area'
