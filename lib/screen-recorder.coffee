@@ -13,6 +13,7 @@ module.exports = ScreenRecorder =
       description: 'Directory where screen recording will be saved.'
 
   selectAreaView: null
+  statusView: null
   recorderManager: null
   modalPanel: null
   subscriptions: null
@@ -40,8 +41,15 @@ module.exports = ScreenRecorder =
     @modalPanel.destroy()
     @subscriptions.dispose()
     @selectAreaView.destroy()
+    @statusView.destroy()
 
   serialize: ->
+
+  consumeStatusBar: (statusBar) ->
+    ScreenRecorderStatusView = require './screen-recorder-status-view'
+    @statusView = new ScreenRecorderStatusView()
+    @statusView.setStatusBar statusBar
+    @recorderManager.setStatusView @statusView
 
   openSelectArea: ->
     if @recorderManager.isRecording()
