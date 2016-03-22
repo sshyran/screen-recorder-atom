@@ -1,9 +1,17 @@
 ScreenRecorderSelectAreaView = require './screen-recorder-select-area-view'
 ScreenRecorderRecorderManager = require './recorder-manager'
+path = require 'path'
+fs = require 'fs-plus'
 {requirePackages} = require 'atom-utils'
 {CompositeDisposable} = require 'atom'
 
 module.exports = ScreenRecorder =
+  config:
+    targetDirectory:
+      type: 'string'
+      default: path.join(fs.getHomeDirectory(), 'atomrecordings')
+      description: 'Directory where screen recording will be saved.'
+
   selectAreaView: null
   recorderManager: null
   modalPanel: null
