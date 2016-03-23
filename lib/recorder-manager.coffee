@@ -38,6 +38,7 @@ module.exports = ->
       atom.notifications.addSuccess 'Recording saved'
       isRecording = false
       @statusView.hide()
+      atom.workspace.open @filePath
     else
       atom.notifications.addWarning "There is not a recording active"
 
