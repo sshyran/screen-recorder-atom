@@ -67,13 +67,15 @@ module.exports = ScreenRecorder =
     requirePackages('tree-view').then ([treeView]) =>
       treeView = treeView.treeView
       p = treeView.offset()
-      @recorderManager.startRecording p.left, p.top, treeView.width(), treeView.height()
+      aP = atom.getPosition()
+      @recorderManager.startRecording p.left + aP.x, p.top + aP.y, treeView.width(), treeView.height()
 
   recordActivePane: ->
-    atom.workspace.getActivePane()
+    pane = atom.workspace.getActivePane()
     paneElement = atom.views.getView(pane)
     r = paneElement.getBoundingClientRect()
-    @recorderManager.startRecording r.left, r.top, r.bottom - r.top, r.right - r.left
+    aP = atom.getPosition()
+    @recorderManager.startRecording r.left + aP.x, r.top + aP.y,  r.right - r.left, r.bottom - r.top
 
   stopRecording: ->
     @recorderManager.stopRecording()

@@ -80,8 +80,9 @@ class ScreenRecorderSelectAreaView extends View
     h = Math.abs(@initialH - e.pageY)
     x = if e.pageX <= @initialW then e.pageX else @initialW
     y = if e.pageY <= @initialH then e.pageY else @initialH
+    aP = atom.getPosition()
 
-    @startRecording x, y, w, h
+    @startRecording x + aP.x, y + aP.y, w, h
 
   hide: ->
     for panel in atom.workspace.getModalPanels()
