@@ -9,7 +9,7 @@ module.exports = ScreenRecorder =
   config:
     targetDirectory:
       type: 'string'
-      default: path.join(fs.getHomeDirectory(), 'atomrecordings')
+      default: path.join fs.getHomeDirectory(), 'atomrecordings'
       description: 'Directory where screen recording will be saved.'
 
   selectAreaView: null
