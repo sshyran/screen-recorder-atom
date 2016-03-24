@@ -26,6 +26,8 @@ module.exports = ->
           '-f x11grab',
           "-video_size #{w}x#{h}"
         ]
+        .on 'error', (e) ->
+          throw e if e.message.indexOf('SIGKILL') < 0
         .save @filePath
 
       atom.notifications.addInfo "Recording started from #{x},#{y} with size #{w}x#{h}"
@@ -34,7 +36,7 @@ module.exports = ->
 
   stopRecording: ->
     if isRecording
-      @ffmpegCommand.kill('SIGSTOP')
+      @ffmpegCommand.kill()
       atom.notifications.addSuccess 'Recording saved'
       isRecording = false
       @statusView.hide()
@@ -44,7 +46,7 @@ module.exports = ->
 
   cancelRecording: ->
     if isRecording
-      @ffmpegCommand.kill('SIGSTOP')
+      @ffmpegCommand.kill()
       fs.removeSync @filePath
       atom.notifications.addInfo 'Recording canceled'
       isRecording = false
