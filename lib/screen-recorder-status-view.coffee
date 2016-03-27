@@ -18,12 +18,12 @@ class ScreenRecorderStatusView extends View
   startTimer: ->
     @startTime = new Date
     @timer.text '0s'
-    setTimeout (=> @updateTimer()), 1000
+    @timeout = setTimeout (=> @updateTimer()), 1000
 
   updateTimer: ->
     seconds = parseInt ((new Date) - @startTime) / 1000
     @timer.text seconds + 's'
-    setTimeout (=> @updateTimer()), 1000
+    @timeout = setTimeout (=> @updateTimer()), 1000
 
   setStatusBar: (statusBar) ->
     @statusBar = statusBar
@@ -33,4 +33,9 @@ class ScreenRecorderStatusView extends View
     @startTimer()
 
   hide: ->
+    clearTimeout @timeout
     @tile.destroy()
+
+  saving: ->
+    clearTimeout @timeout
+    @timer.text 'Saving...'
