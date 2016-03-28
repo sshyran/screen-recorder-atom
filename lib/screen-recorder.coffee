@@ -1,5 +1,5 @@
-ScreenRecorderSelectAreaView = require './screen-recorder-select-area-view'
-ScreenRecorderRecorderManager = require './recorder-manager'
+SelectAreaView = require './views/select-area-view'
+RecorderManager = require './recorder-manager'
 path = require 'path'
 fs = require 'fs-plus'
 {requirePackages} = require 'atom-utils'
@@ -10,7 +10,7 @@ module.exports = ScreenRecorder =
     targetDirectory:
       type: 'string'
       default: path.join fs.getHomeDirectory(), 'atomrecordings'
-      description: 'Directory where screen recording will be saved.'
+      description: 'Directory where screen recordings will be saved.'
 
   selectAreaView: null
   statusView: null
@@ -19,8 +19,8 @@ module.exports = ScreenRecorder =
   subscriptions: null
 
   activate: (state) ->
-    @recorderManager = new ScreenRecorderRecorderManager
-    @selectAreaView = new ScreenRecorderSelectAreaView @recorderManager
+    @recorderManager = new RecorderManager
+    @selectAreaView = new SelectAreaView @recorderManager
 
     @modalPanel = atom.workspace.addModalPanel
       item: @selectAreaView
@@ -46,8 +46,8 @@ module.exports = ScreenRecorder =
   serialize: ->
 
   consumeStatusBar: (statusBar) ->
-    ScreenRecorderStatusView = require './screen-recorder-status-view'
-    @statusView = new ScreenRecorderStatusView()
+    StatusView = require './views/status-view'
+    @statusView = new StatusView
     @statusView.setStatusBar statusBar
     @recorderManager.setStatusView @statusView
 

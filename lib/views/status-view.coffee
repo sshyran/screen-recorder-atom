@@ -2,7 +2,7 @@
 {CompositeDisposable} = require 'atom'
 
 module.exports =
-class ScreenRecorderStatusView extends View
+class StatusView extends View
   @content: ->
     @div class: 'screen-recorder-status inline-block', =>
       @span class: 'icon icon-device-camera-video'

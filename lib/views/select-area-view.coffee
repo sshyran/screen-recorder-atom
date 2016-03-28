@@ -2,7 +2,7 @@
 {CompositeDisposable} = require 'atom'
 
 module.exports =
-class ScreenRecorderSelectAreaView extends View
+class SelectAreaView extends View
   recorderManager = null
 
   @content: ->
