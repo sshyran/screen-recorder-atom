@@ -20,6 +20,12 @@ module.exports = ScreenRecorder =
 
   activate: (state) ->
     @recorderManager = new RecorderManager
+
+    if not @recorderManager.canBeEnabled()
+      atom.notifications.addWarning 'screen-recorder does not support your operative system yet'
+      @deactivate()
+      return
+
     @selectAreaView = new SelectAreaView @recorderManager
 
     @modalPanel = atom.workspace.addModalPanel
@@ -38,10 +44,10 @@ module.exports = ScreenRecorder =
       'screen-recorder:cancel-recording': => @cancelRecording()
 
   deactivate: ->
-    @modalPanel.destroy()
-    @subscriptions.dispose()
-    @selectAreaView.destroy()
-    @statusView.destroy()
+    @modalPanel?.destroy()
+    @subscriptions?.dispose()
+    @selectAreaView?.destroy()
+    @statusView?.destroy()
 
   serialize: ->
 
@@ -59,23 +65,22 @@ module.exports = ScreenRecorder =
       @modalPanel.item.focus()
 
   recordWindow: ->
-    p = atom.getPosition()
     s = atom.getSize()
-    @recorderManager.startRecording p.x, p.y, s.width, s.height
+    @recorderManager.startRecording 0, 0, s.width, s.height
 
   recordTreeView: ->
     requirePackages('tree-view').then ([treeView]) =>
       treeView = treeView.treeView
       p = treeView.offset()
-      aP = atom.getPosition()
-      @recorderManager.startRecording p.left + aP.x, p.top + aP.y, treeView.width(), treeView.height()
+      @recorderManager
+        .startRecording p.left, p.top, treeView.width(), treeView.height()
 
   recordActivePane: ->
     pane = atom.workspace.getActivePane()
     paneElement = atom.views.getView(pane)
     r = paneElement.getBoundingClientRect()
-    aP = atom.getPosition()
-    @recorderManager.startRecording r.left + aP.x, r.top + aP.y,  r.right - r.left, r.bottom - r.top
+    @recorderManager
+      .startRecording r.left, r.top,  r.right - r.left, r.bottom - r.top
 
   stopRecording: ->
     @recorderManager.stopRecording()

@@ -4,9 +4,20 @@ path = require 'path'
 fs = require 'fs-plus'
 {CompositeDisposable} = require 'atom'
 
-module.exports = ->
+module.exports =
+class RecorderManager
   isRecording = false
   isSaving = false
+  adapter = null
+
+  constructor: ->
+    switch process.platform
+      when 'linux' then @adapter = require './adapters/linux'
+      when 'win32' then @adapter = require './adapters/windows'
+      when 'darwin' then @adapter = require './adapters/mac'
+
+  canBeEnabled: ->
+    @adapter?.isSupported()
 
   setStatusView: (statusView) ->
     @statusView = statusView
@@ -16,25 +27,23 @@ module.exports = ->
       atom.notifications.addWarning "There is already a recording active"
     else
       @setPaths()
-      @ffmpegCommand = ffmpeg()
+      @ffmpegCmd = ffmpeg()
         .addOptions [
           '-pix_fmt rgb24'
           "-filter:v scale=-1:#{h}:flags=lanczos"
         ]
         .size "#{w}x#{h}"
         .fps 20
-        .input ":0.0+#{x},#{y}"
-        .inputOptions [
-          '-f x11grab',
-          "-video_size #{w}x#{h}"
-        ]
         .on 'error', (error) =>
           if error.message.indexOf('SIGKILL') < 0
             fs.removeSync @tmpDir
             isRecording = false
             @statusView.hide()
             throw error
-        .save @tmpFilesSave
+
+      dimensions = @adapter.handleDimensions x, y, w, h
+      @adapter.setupFfmpegCmd @ffmpegCmd, dimensions
+      @ffmpegCmd.save @tmpFilesSave
 
       atom.notifications.addInfo "Recording started from #{x},#{y} with size #{w}x#{h}"
       isRecording = true
@@ -43,7 +52,7 @@ module.exports = ->
   stopRecording: ->
     if isRecording and not isSaving
       isSaving = true
-      @ffmpegCommand.kill()
+      @ffmpegCmd.kill()
       @statusView.saving()
 
       im.convert [
@@ -69,7 +78,7 @@ module.exports = ->
 
   cancelRecording: ->
     if isRecording and not isSaving
-      @ffmpegCommand.kill()
+      @ffmpegCmd.kill()
       fs.removeSync @tmpDir
       atom.notifications.addInfo 'Recording canceled'
       isRecording = false

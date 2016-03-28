@@ -80,14 +80,10 @@ class SelectAreaView extends View
     h = Math.abs(@initialH - e.pageY)
     x = if e.pageX <= @initialW then e.pageX else @initialW
     y = if e.pageY <= @initialH then e.pageY else @initialH
-    aP = atom.getPosition()
 
-    @startRecording x + aP.x, y + aP.y, w, h
+    @recorderManager.startRecording x, y, w, h
 
   hide: ->
     for panel in atom.workspace.getModalPanels()
       panel.hide() if panel.className is 'screen-recorder-select-area-panel'
     atom.workspace.getActivePane().activate()
-
-  startRecording: (x, y, w, h) ->
-    @recorderManager.startRecording x, y, w, h
