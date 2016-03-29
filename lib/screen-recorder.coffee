@@ -65,8 +65,9 @@ module.exports = ScreenRecorder =
       @modalPanel.item.focus()
 
   recordWindow: ->
-    s = atom.getSize()
-    @recorderManager.startRecording 0, 0, s.width, s.height
+    w = document.documentElement.offsetWidth
+    h = document.documentElement.offsetHeight
+    @recorderManager.startRecording 0, 0, w, h
 
   recordTreeView: ->
     requirePackages('tree-view').then ([treeView]) =>

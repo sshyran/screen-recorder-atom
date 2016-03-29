@@ -13,5 +13,6 @@ module.exports =
       ]
 
   handleDimensions: (x, y, w, h) ->
+    menubar = atom.getSize().height - document.documentElement.offsetHeight
     aP = atom.getPosition()
-    {x: x + aP.x, y: y + aP.y, w: w, h: h}
+    {x: x + aP.x, y: y + aP.y + menubar, w: w, h: h}
