@@ -42,6 +42,10 @@ class RecorderManager
             throw error
 
       dimensions = @adapter.handleDimensions x, y, w, h
+
+      for k, v of dimensions
+        dimensions[k] = parseInt v, 10
+
       @adapter.setupFfmpegCmd @ffmpegCmd, dimensions
       @ffmpegCmd.save @tmpFilesSave
 
