@@ -49,7 +49,8 @@ class RecorderManager
       @adapter.setupFfmpegCmd @ffmpegCmd, dimensions
       @ffmpegCmd.save @tmpFilesSave
 
-      atom.notifications.addInfo "Recording started from #{x},#{y} with size #{w}x#{h}"
+      atom.notifications
+        .addInfo "Recording started from #{x},#{y} with size #{w}x#{h}"
       isRecording = true
       @statusView.show()
 

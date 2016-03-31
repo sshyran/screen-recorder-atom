@@ -22,7 +22,8 @@ module.exports = ScreenRecorder =
     @recorderManager = new RecorderManager
 
     if not @recorderManager.canBeEnabled()
-      atom.notifications.addWarning 'screen-recorder does not support your operative system yet'
+      atom.notifications
+        .addWarning 'screen-recorder does not support your operative system yet'
       @deactivate()
       return
 
