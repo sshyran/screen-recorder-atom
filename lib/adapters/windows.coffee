@@ -16,6 +16,24 @@ module.exports =
       ]
 
   handleDimensions: (x, y, w, h) ->
-    menubar = atom.getSize().height - document.documentElement.offsetHeight
     aP = atom.getPosition()
-    {x: x + aP.x, y: y + aP.y + menubar, w: w, h: h}
+    wDiff = (window.outerWidth - window.innerWidth) / 2
+    hDiff = (window.outerHeight - window.innerHeight) / 2
+    isMenubar = hDiff > 20
+    if isMenubar
+      frame = atom.getSize().height - document.documentElement.offsetHeight - 8
+      frame = frame - (aP.y * 2) if atom.isMaximized()
+      aPx = if atom.isMaximized() then 0 else aP.x
+      aPy = if atom.isMaximized() then 0 else aP.y
+      x = x + aPx + wDiff
+      y = y + aPy + frame
+      y = y - hDiff if atom.isMaximized()
+      h = h + (aP.y / 2) if atom.isMaximized()
+    else
+      aPx = if atom.isMaximized() then 0 else aP.x
+      aPy = if atom.isMaximized() then 0 else aP.y
+      x = x + aPx + wDiff
+      y = y + aPy + (hDiff * 2)
+      y = y - 8 if not atom.isMaximized()
+
+    {x: x, y: y, w: w, h: h}
