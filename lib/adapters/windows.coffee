@@ -12,7 +12,6 @@ module.exports =
         "-video_size #{dimensions.w}x#{dimensions.h}"
         "-offset_x #{dimensions.x}"
         "-offset_y #{dimensions.y}"
-        '-show_region 1'
       ]
 
   handleDimensions: (x, y, w, h) ->
