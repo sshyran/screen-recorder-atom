@@ -19,20 +19,17 @@ module.exports =
     aP = atom.getPosition()
     wDiff = (window.outerWidth - window.innerWidth) / 2
     hDiff = (window.outerHeight - window.innerHeight) / 2
+    aPx = if atom.isMaximized() then 0 else aP.x
+    aPy = if atom.isMaximized() then 0 else aP.y
+    x = x + aPx + wDiff
     isMenubar = hDiff > 20
     if isMenubar
       frame = atom.getSize().height - document.documentElement.offsetHeight - 8
       frame = frame - (aP.y * 2) if atom.isMaximized()
-      aPx = if atom.isMaximized() then 0 else aP.x
-      aPy = if atom.isMaximized() then 0 else aP.y
-      x = x + aPx + wDiff
       y = y + aPy + frame
       y = y - hDiff if atom.isMaximized()
       h = h + (aP.y / 2) if atom.isMaximized()
     else
-      aPx = if atom.isMaximized() then 0 else aP.x
-      aPy = if atom.isMaximized() then 0 else aP.y
-      x = x + aPx + wDiff
       y = y + aPy + (hDiff * 2)
       y = y - 8 if not atom.isMaximized()
 
