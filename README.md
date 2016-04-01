@@ -18,7 +18,7 @@ sudo apt-get install ffmpeg imagemagick
 Install ImageMagick from [here](http://www.imagemagick.org/script/binary-releases.php#windows), it already has ffmpeg.
 
 ### Mac
-** This package has not support for OS X ** (I don't have a mac to test it).
+**This package has not support for OS X** (I don't have a mac to test it).
 
 But PR are welcome :smile:
 
