@@ -59,15 +59,19 @@ class RecorderManager
       isSaving = true
       @ffmpegCmd.kill()
       @statusView.saving()
-
-      im.convert [
+      imParams = [
         '-loop', '0'
         '-delay', '5'
         '-coalesce'
         @tmpFilesRead
-        '-layers', 'Optimize'
-        @filePath
-      ], (error) =>
+      ]
+
+      if atom.config.get 'screen-recorder.reduceOutput'
+        imParams.push '-layers', 'Optimize'
+
+      imParams.push @filePath
+
+      im.convert imParams, (error) =>
         fs.removeSync @tmpDir
         isRecording = false
         isSaving = false

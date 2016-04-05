@@ -11,6 +11,10 @@ module.exports = ScreenRecorder =
       type: 'string'
       default: path.join fs.getHomeDirectory(), 'atomrecordings'
       description: 'Directory where screen recordings will be saved.'
+    reduceOutput:
+      type: 'boolean'
+      default: true
+      description: 'Disable it if you have performance issues.'
 
   selectAreaView: null
   statusView: null
