@@ -6,7 +6,8 @@
   "keywords": [
     "screen",
     "recording",
-    "recorder"
+    "recorder",
+    "gif"
   ],
   "activationCommands": {
     "atom-workspace": [
