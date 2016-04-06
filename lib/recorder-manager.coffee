@@ -9,6 +9,7 @@ class RecorderManager
   isRecording = false
   isSaving = false
   adapter = null
+  fps = null
 
   constructor: ->
     switch process.platform
@@ -27,13 +28,14 @@ class RecorderManager
       atom.notifications.addWarning "There is already a recording active"
     else
       @setPaths()
+      @fps = atom.config.get 'screen-recorder.framesPerSecond'
       @ffmpegCmd = ffmpeg()
         .addOptions [
           '-pix_fmt rgb24'
           "-filter:v scale=-1:#{h}:flags=lanczos"
         ]
         .size "#{w}x#{h}"
-        .fps 20
+        .fps @fps
         .on 'error', (error) =>
           if error.message.indexOf('SIGKILL') < 0
             fs.removeSync @tmpDir
@@ -61,7 +63,7 @@ class RecorderManager
       @statusView.saving()
       imParams = [
         '-loop', '0'
-        '-delay', '5'
+        '-delay', 100 / @fps
         '-coalesce'
         @tmpFilesRead
       ]

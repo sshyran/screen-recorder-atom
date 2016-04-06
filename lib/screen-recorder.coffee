@@ -15,6 +15,11 @@ module.exports = ScreenRecorder =
       type: 'boolean'
       default: true
       description: 'Disable it if you have performance issues.'
+    framesPerSecond:
+      type: 'integer'
+      default: 20
+      minimum: 1
+      maximum: 30
 
   selectAreaView: null
   statusView: null
