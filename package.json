@@ -1,7 +1,7 @@
 {
   "name": "screen-recorder",
   "main": "./lib/screen-recorder",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Record your atom editor into a gif",
   "keywords": [
     "screen",
