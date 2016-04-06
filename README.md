@@ -48,3 +48,11 @@ Stops the current recording and saves nothing
 
 ### Target Directory
 Directory where screen recordings will be saved
+
+### Reduce Output
+Reduce the generated gif size
+
+**Disable it if you have performance issues.**
+
+### Frames Per Second
+Frames per second used in the animated gif
