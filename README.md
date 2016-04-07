@@ -1,5 +1,7 @@
 # screen-recorder
 
+[![apm install screen-recorder](https://apm-badges.herokuapp.com/apm/screen-recorder.svg)](https://atom.io/packages/screen-recorder)
+
 Record your atom editor into a gif.
 
 ![screen-recorder](https://cloud.githubusercontent.com/assets/10590799/14191540/8b7275f8-f755-11e5-8eae-931680f5a869.gif)
