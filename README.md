@@ -29,7 +29,7 @@ With apm:
 ```bash
 apm install screen-recorder
 ```
-Or Settingss ➔ Packages ➔ Search for `screen-recorder`
+Or Settings ➔ Packages ➔ Search for `screen-recorder`
 
 ## Commands
 
